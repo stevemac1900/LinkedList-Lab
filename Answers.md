@@ -8,10 +8,15 @@ getLength gets 0
 isMember gets false
 
 **Question 2: ** I would insert a new node and then test to make sure that :
+
 getName(0) gets the name of your node
+
 getQuantity(0) gets the quantity of your node
+
 getLength() gets 1
+
 isMember(name of your node) gets true
+
 
 **Question 4: ** Yes
 
