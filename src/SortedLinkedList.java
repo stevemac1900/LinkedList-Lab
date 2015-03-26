@@ -1,6 +1,7 @@
 public class SortedLinkedList
 {
   private Node head;
+  private int length;
   
   /**
    * Create an empty list.
@@ -8,6 +9,7 @@ public class SortedLinkedList
   public SortedLinkedList()
   {
     head = null;
+    length = 0;
   }
   
   /**
@@ -34,7 +36,13 @@ public class SortedLinkedList
    */
   public String getName(int index)
   {
-    
+    if (index >= length)
+      return null;
+    Node temp = head;
+    for (int i = 0; i < index; i++) {
+      temp = temp.getNext();
+    }
+    return temp.getName();
   }
   
   /**
@@ -44,15 +52,21 @@ public class SortedLinkedList
    */
   public int getQuantity(int index)
   {
-    
+    if (index >= length)
+      return -1;
+    Node temp = head;
+    for (int i = 0; i < index; i++) {
+      temp = temp.getNext();
+    }
+    return temp.getQuantity();
   }
   
   /**
    * This method will return the number of elements currently held in the list.
    */
-  public int length()
+  public int getLength()
   {
-    
+    return length;
   }
   
   /**
@@ -61,7 +75,15 @@ public class SortedLinkedList
    */
   public boolean isMember(String name)
   {
-    
+    if (length > 0){
+      Node temp = head;
+      while (temp != null){
+        if (temp.getName() == name)
+          return true;
+        temp = temp.getNext();
+      }
+    }
+    return false;
   }
   
   /**
@@ -70,6 +92,40 @@ public class SortedLinkedList
    */
   public void insert(String name, int quantity)
   {
+    Node newNode = new Node(name, quantity);
     
-  }  
+    length += 1;
+    
+    if (head == null) {
+      head = newNode;
+      return;
+    }
+    
+    if (newNode.getQuantity() < head.getQuantity()){
+      newNode.setNext(head);
+      head = newNode;
+    }
+    
+    else {
+      Node curr = head.getNext();
+      Node prev = head;
+      boolean inserted = false;
+      
+      while (curr != null) {
+        if (newNode.getQuantity() >= prev.getQuantity() && newNode.getQuantity() < curr.getQuantity()) {
+          prev.setNext(newNode);
+          newNode.setNext(curr);
+          curr = null;
+          inserted = true;
+        }
+        else {
+          prev = curr;
+          curr = curr.getNext();
+        }
+      }
+      if (inserted == false) {
+        prev.setNext(newNode);
+      }
+    }
+  }
 }
